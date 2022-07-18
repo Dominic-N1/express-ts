@@ -1,14 +1,16 @@
 import express, { Request, Response } from 'express';
-import { router } from './loginRoutes';
+import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
-
-const port = 3000;
+import { AppRouter } from './AppRouter';
+import './controllers/LoginController';
+import './controllers/RootController';
 
 const app = express();
+const port = 3000;
 
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({ keys: ['MustBeAString'] }));
-app.use(router);
+app.use(AppRouter.getInstance());
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`);
